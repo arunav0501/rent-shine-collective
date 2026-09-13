@@ -20,7 +20,9 @@ export const Route = createFileRoute("/product/$productId")({
 
 function ProductPage() {
   const { productId } = Route.useParams();
-  const item = listings.find((listing) => listing.id === productId) ?? listings[0];
+  const fallbackItem = listings[0];
+  if (!fallbackItem) return null;
+  const item = listings.find((listing) => listing.id === productId) ?? fallbackItem;
   const [days, setDays] = useState(3);
   const costs = useMemo(() => ({ rental: item.price * days, fee: Math.round(item.price * days * 0.12), deposit: 120 }), [days, item.price]);
   return <div className="min-h-screen bg-background"><AppHeader /><main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
