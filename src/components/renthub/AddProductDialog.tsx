@@ -30,10 +30,10 @@ export function AddProductDialog({ trigger }: { trigger: React.ReactNode }) {
         <div className="grid gap-6 p-6 sm:p-8 md:grid-cols-[0.8fr_1.2fr]">
           <div>
             <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={(event) => { const file = event.target.files?.[0]; if (file) setPreview(URL.createObjectURL(file)); }} />
-            <button type="button" onClick={() => inputRef.current?.click()} className="relative aspect-square w-full overflow-hidden rounded-2xl border border-dashed border-primary/40 bg-accent/30 text-center transition-colors hover:bg-accent/60 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring">
+            <Button type="button" variant="outline" onClick={() => inputRef.current?.click()} className="relative aspect-square h-auto w-full overflow-hidden whitespace-normal rounded-2xl border-dashed border-primary/40 bg-accent/30 p-0 text-center hover:bg-accent/60">
               {preview || generated ? <img src={preview ?? cameraImage} alt="Product preview" className="h-full w-full object-cover" /> : <span className="grid h-full place-items-center p-6"><span><ImagePlus className="mx-auto mb-3 size-9 text-primary" /><span className="block font-bold">Drop a product photo</span><span className="mt-1 block text-xs text-muted-foreground">or click to browse</span></span></span>}
               {stage > 0 && <span className="scanner absolute inset-x-0 top-0 h-1/4" />}
-            </button>
+            </Button>
             <Button className="mt-3 w-full" onClick={generate} disabled={stage > 0}><Sparkles />{stage > 0 ? "Creating listing..." : "Generate with AI"}</Button>
             {stage > 0 && <div className="mt-4 space-y-2">{statuses.map((status, index) => <p key={status} className={`flex items-center gap-2 text-xs ${index < stage ? "text-trust" : "text-muted-foreground"}`}>{index < stage ? <Check className="size-3.5" /> : <span className="size-3.5 rounded-full border border-border" />}{status}</p>)}</div>}
           </div>
